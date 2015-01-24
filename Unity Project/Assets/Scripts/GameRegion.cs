@@ -48,7 +48,7 @@ public class GameRegion : MonoBehaviour
 
 		//Set up the camera motion.
 		TweenPosition tweener = Player.Instance.gameObject.AddComponent<TweenPosition>();
-		tweener.Target = newPos;
+		tweener.Target = Player.Instance.GetTargetPosition(newRoom);
 		tweener.MoveTime = ChangeRoomsTime;
 
 		//Set up the room.
