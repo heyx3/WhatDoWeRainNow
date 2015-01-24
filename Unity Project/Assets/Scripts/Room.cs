@@ -243,12 +243,12 @@ public class Room : MonoBehaviour
 			for (int y = 0; y < isReached.GetLength(1); ++y)
 				isReached[x, y] = false;
 
-		List<mVector2i> searchFrontier = new List<mVector2i>() { freeSpaces[0] };
+		Stack<mVector2i> searchFrontier = new Stack<mVector2i>();
+		searchFrontier.Push(freeSpaces[0]);
 		isReached[freeSpaces[0].X, freeSpaces[0].Y] = true;
 		while (searchFrontier.Count > 0)
 		{
-			mVector2i searchPos = searchFrontier[searchFrontier.Count - 1];
-			searchFrontier.RemoveAt(searchFrontier.Count - 1);
+			mVector2i searchPos = searchFrontier.Pop();
 
 			if (searchPos.X > 0)
 			{
@@ -256,7 +256,7 @@ public class Room : MonoBehaviour
 					freeSpaces.Contains(searchPos.LessX()))
 				{
 					isReached[searchPos.X - 1, searchPos.Y] = true;
-					searchFrontier.Add(searchPos.LessX());
+					searchFrontier.Push(searchPos.LessX());
 				}
 			}
 			if (searchPos.Y > 0)
@@ -265,7 +265,7 @@ public class Room : MonoBehaviour
 					freeSpaces.Contains(searchPos.LessY()))
 				{
 					isReached[searchPos.X, searchPos.Y - 1] = true;
-					searchFrontier.Add(searchPos.LessY());
+					searchFrontier.Push(searchPos.LessY());
 				}
 			}
 			if (searchPos.X < isReached.GetLength(0) - 1)
@@ -274,16 +274,16 @@ public class Room : MonoBehaviour
 					freeSpaces.Contains(searchPos.MoreX()))
 				{
 					isReached[searchPos.X + 1, searchPos.Y] = true;
-					searchFrontier.Add(searchPos.MoreX());
+					searchFrontier.Push(searchPos.MoreX());
 				}
 			}
 			if (searchPos.Y < isReached.GetLength(1) - 1)
 			{
 				if (!isReached[searchPos.X, searchPos.Y + 1] &&
-					freeSpaces.Contains(searchPos.MoreX()))
+					freeSpaces.Contains(searchPos.MoreY()))
 				{
 					isReached[searchPos.X, searchPos.Y + 1] = true;
-					searchFrontier.Add(searchPos.MoreY());
+					searchFrontier.Push(searchPos.MoreY());
 				}
 			}
 		}
