@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 
@@ -22,6 +23,25 @@ public class Room : MonoBehaviour
 
 	private bool RoomNeedsCleaning = false;
 
+
+	/// <summary>
+	/// Finds a path from the given start to the given end.
+	/// Returns "null" if there is none thanks to blockers.
+	/// </summary>
+	public List<mVector2i> FindPath(mVector2i start, mVector2i end, bool canMoveDiagonal)
+	{
+		GameGraph graph = new GameGraph(canMoveDiagonal);
+		PathFinder<GameNode> pather = new PathFinder<GameNode>(graph, (n1, n2) => new GameEdge(n1, n2));
+		
+		pather.Start = new GameNode(start);
+		pather.End = new GameNode(end);
+
+		pather.FindPath();
+		if (pather.CurrentPath[pather.CurrentPath.Count - 1].GridCoord != end)
+			return null;
+		
+		return pather.CurrentPath.Select(n => n.GridCoord).ToList();
+	}
 
 	/// <summary>
 	/// Sets up a new room at the given new grid position.

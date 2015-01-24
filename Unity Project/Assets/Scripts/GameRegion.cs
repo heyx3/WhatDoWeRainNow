@@ -13,13 +13,13 @@ public class GameRegion : MonoBehaviour
 
 	public float ChangeRoomsTime = 4.0f;
 
-
+	
+	public Room RoomObj { get; private set; }
 	public bool[,] RoomsCleared { get; private set; }
 	public mVector2i CurrentRoom { get; private set; }
 
 
 	private Transform tr;
-	private Room roomGen;
 
 
 	/// <summary>
@@ -52,7 +52,7 @@ public class GameRegion : MonoBehaviour
 		tweener.MoveTime = ChangeRoomsTime;
 
 		//Set up the room.
-		roomGen.GenerateNewRoom(oldRoom, newRoom);
+		RoomObj.GenerateNewRoom(oldRoom, newRoom);
 	}
 
 
@@ -60,7 +60,7 @@ public class GameRegion : MonoBehaviour
 	{
 		Instance = this;
 		tr = transform;
-		roomGen = FindObjectOfType<Room>();
+		RoomObj = FindObjectOfType<Room>();
 	}
 
 	void OnDrawGizmos()
