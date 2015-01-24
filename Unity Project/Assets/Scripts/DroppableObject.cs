@@ -3,5 +3,11 @@
 
 public class DroppableObject : MonoBehaviour
 {
-	public float DropHeight = 4.0f;
+	public float DropHeightMin = 3.0f,
+				 DropHeightMax = 5.0f;
+
+	public float GetDropHeight()
+	{
+		return Random.Range(DropHeightMin, DropHeightMax);
+	}
 }

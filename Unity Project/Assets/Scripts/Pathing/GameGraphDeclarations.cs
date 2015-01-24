@@ -61,22 +61,22 @@ public class GameGraph : Graph<GameNode>
 	{
 		bool lessX = (starting.GridCoord.X > 0),
 			 lessY = (starting.GridCoord.Y > 0),
-			 moreX = (starting.GridCoord.X < (Rm.RoomGrid.GetLength(0) - 1)),
-			 moreY = (starting.GridCoord.Y < (Rm.RoomGrid.GetLength(1) - 1));
+			 moreX = (starting.GridCoord.X < (Rm.RoomObstacles.GetLength(0) - 1)),
+			 moreY = (starting.GridCoord.Y < (Rm.RoomObstacles.GetLength(1) - 1));
 
-		if (lessX && Rm.RoomGrid[starting.GridCoord.X - 1, starting.GridCoord.Y] == null)
+		if (lessX && !Rm.RoomObstacles[starting.GridCoord.X - 1, starting.GridCoord.Y])
 		{
 			outEdgeList.Add(new GameEdge(starting, new GameNode(starting.GridCoord.LessX())));
 		}
-		if (lessY && Rm.RoomGrid[starting.GridCoord.X, starting.GridCoord.Y - 1] == null)
+		if (lessY && !Rm.RoomObstacles[starting.GridCoord.X, starting.GridCoord.Y - 1])
 		{
 			outEdgeList.Add(new GameEdge(starting, new GameNode(starting.GridCoord.LessY())));
 		}
-		if (moreX && Rm.RoomGrid[starting.GridCoord.X + 1, starting.GridCoord.Y] == null)
+		if (moreX && !Rm.RoomObstacles[starting.GridCoord.X + 1, starting.GridCoord.Y])
 		{
 			outEdgeList.Add(new GameEdge(starting, new GameNode(starting.GridCoord.MoreX())));
 		}
-		if (moreY && Rm.RoomGrid[starting.GridCoord.X, starting.GridCoord.Y + 1] == null)
+		if (moreY && !Rm.RoomObstacles[starting.GridCoord.X, starting.GridCoord.Y + 1])
 		{
 			outEdgeList.Add(new GameEdge(starting, new GameNode(starting.GridCoord.MoreY())));
 		}
@@ -84,22 +84,22 @@ public class GameGraph : Graph<GameNode>
 		if (CanMoveDiagonally)
 		{
 			if (lessX && lessY &&
-				Rm.RoomGrid[starting.GridCoord.X - 1, starting.GridCoord.Y - 1] == null)
+				Rm.RoomObstacles[starting.GridCoord.X - 1, starting.GridCoord.Y - 1])
 			{
 				outEdgeList.Add(new GameEdge(starting, new GameNode(starting.GridCoord.LessX().LessY())));
 			}
 			if (lessX && moreY &&
-				Rm.RoomGrid[starting.GridCoord.X - 1, starting.GridCoord.Y + 1] == null)
+				Rm.RoomObstacles[starting.GridCoord.X - 1, starting.GridCoord.Y + 1])
 			{
 				outEdgeList.Add(new GameEdge(starting, new GameNode(starting.GridCoord.LessX().MoreY())));
 			}
 			if (moreX && lessY &&
-				Rm.RoomGrid[starting.GridCoord.X + 1, starting.GridCoord.Y - 1] == null)
+				Rm.RoomObstacles[starting.GridCoord.X + 1, starting.GridCoord.Y - 1])
 			{
 				outEdgeList.Add(new GameEdge(starting, new GameNode(starting.GridCoord.MoreX().LessY())));
 			}
 			if (moreX && moreY &&
-				Rm.RoomGrid[starting.GridCoord.X + 1, starting.GridCoord.Y + 1] == null)
+				Rm.RoomObstacles[starting.GridCoord.X + 1, starting.GridCoord.Y + 1])
 			{
 				outEdgeList.Add(new GameEdge(starting, new GameNode(starting.GridCoord.MoreX().MoreY())));
 			}

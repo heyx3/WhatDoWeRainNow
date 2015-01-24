@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using UnityEngine;
 
 
@@ -6,7 +7,7 @@ using UnityEngine;
 /// Drops an object onto the floor, making it bounce up and down for a bit.
 /// This component deletes itself when finished.
 /// After the bouncing is finished, removes this object's Rigidbody/DroppableObject
-///     and disables its collider.
+///     and enables the character controller component if it exists.
 /// </summary>
 [RequireComponent(typeof(Collider))]
 [RequireComponent(typeof(DroppableObject))]
@@ -18,23 +19,40 @@ public class ObjectBounce : MonoBehaviour
 
 
 	private Rigidbody rgd;
+	private Collider coll;
+	private CharacterController contr;
+
 	private float timeNotBouncing = -1.0f;
 
 
 	void Awake()
 	{
 		rgd = gameObject.GetComponent<Rigidbody>();
+		contr = GetComponent<CharacterController>();
+		coll = GetComponents<Collider>().Where(c => (c != contr)).First();
+
 		rgd.constraints = RigidbodyConstraints.FreezeRotation |
 						  RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
+		if (contr != null)
+			contr.enabled = false;
+	}
+	void Start()
+	{
+		if (contr != null)
+			contr.enabled = false;
 
 		Vector3 pos = rgd.position;
-		rgd.position = new Vector3(pos.x, GetComponent<DroppableObject>().DropHeight, pos.z);
+		rgd.transform.position = new Vector3(pos.x, GetComponent<DroppableObject>().GetDropHeight(), pos.z);
 	}
 	void OnDestroy()
 	{
 		Destroy(rgd);
 		Destroy(GetComponent<DroppableObject>());
-		GetComponent<Collider>().enabled = false;
+		if (contr != null)
+		{
+			Destroy(coll);
+			contr.enabled = true;
+		}
 	}
 
 	void FixedUpdate()

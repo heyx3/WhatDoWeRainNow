@@ -7,6 +7,9 @@ public class GameRegion : MonoBehaviour
 	public static GameRegion Instance { get; private set; }
 
 
+	/// <summary>
+	/// The size of a room, in Unity units.
+	/// </summary>
 	public float RegionScale = 1.0f;
 	public int nRoomsWidth = 5,
 			   nRoomsHeight = 5;
@@ -28,6 +31,25 @@ public class GameRegion : MonoBehaviour
 	public Vector3 RoomCoordToPos(mVector2i roomCoord)
 	{
 		Vector3 pos = tr.position;
+		
+		Vector2 lerpCoord = new Vector2(roomCoord.X / (float)nRoomsWidth,
+									    roomCoord.Y / (float)nRoomsHeight);
+		//lerpCoord = new Vector2((lerpCoord.x * 2.0f) - 1.0f, (lerpCoord.y * 2.0f) - 1.0f);
+
+		float halfRoomSize = 0.5f * RegionScale;
+		Vector2 min = new Vector2(pos.x - (nRoomsWidth * halfRoomSize),
+								  pos.z - (nRoomsHeight * halfRoomSize)),
+				max = new Vector2(pos.x + (nRoomsWidth * halfRoomSize),
+								  pos.z + (nRoomsHeight * halfRoomSize));
+		min += new Vector2(halfRoomSize, halfRoomSize);
+		max -= new Vector2(halfRoomSize, halfRoomSize);
+
+		return new Vector3(Mathf.Lerp(min.x, max.x, lerpCoord.x),
+						   0.0f,
+						   Mathf.Lerp(min.y, max.y, lerpCoord.y));
+
+
+
 		Vector3 roomSize = new Vector3(RegionScale * nRoomsWidth, 0.0f, RegionScale * nRoomsHeight);
 		return new Vector3(Mathf.Lerp(pos.x - (roomSize.x * 0.5f), pos.x + (roomSize.x * 0.5f),
 									  (roomCoord.X / (float)nRoomsWidth)),
@@ -47,8 +69,8 @@ public class GameRegion : MonoBehaviour
 		CurrentRoom = newRoom;
 
 		//Set up the camera motion.
-		TweenPosition tweener = Player.Instance.gameObject.AddComponent<TweenPosition>();
-		tweener.Target = Player.Instance.GetTargetPosition(newRoom);
+		TweenPosition tweener = PlayerCamera.Instance.gameObject.AddComponent<TweenPosition>();
+		tweener.Target = PlayerCamera.Instance.GetTargetPosition(newRoom);
 		tweener.MoveTime = ChangeRoomsTime;
 
 		//Set up the room.

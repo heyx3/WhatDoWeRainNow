@@ -8,6 +8,7 @@
 	public mVector2i MoreX() { return new mVector2i(X + 1, Y); }
 	public mVector2i MoreY() { return new mVector2i(X, Y + 1); }
 
+
 	public static bool operator==(mVector2i first, mVector2i second)
 	{
 		return first.X == second.X && first.Y == second.Y;
@@ -16,6 +17,16 @@
 	{
 		return first.X != second.X || first.Y != second.Y;
 	}
+
+	public static mVector2i operator+(mVector2i first, mVector2i second)
+	{
+		return new mVector2i(first.X + second.X, first.Y + second.Y);
+	}
+	public static mVector2i operator-(mVector2i first, mVector2i second)
+	{
+		return new mVector2i(first.X - second.X, first.Y - second.Y);
+	}
+
 
 	/// <summary>
 	/// Used for pathfinding.

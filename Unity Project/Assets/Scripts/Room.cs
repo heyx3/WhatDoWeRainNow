@@ -9,10 +9,27 @@ using UnityEngine;
 /// </summary>
 public class Room : MonoBehaviour
 {
-	public GameObject[,] RoomGrid { get; private set; }
+	public bool[,] RoomObstacles;
+
+	/// <summary>
+	/// Does NOT include the player.
+	/// </summary>
+	[NonSerialized]
+	public List<Pawn> RoomPawns = new List<Pawn>();
+	/// <summary>
+	/// All obstacles currently in the field.
+	/// </summary>
+	[NonSerialized]
+	public List<Collider> Obstacles = new List<Collider>();
+	/// <summary>
+	/// The free spaces in this room.
+	/// </summary>
+	[NonSerialized]
+	public List<mVector2i> FreeSpaces = new List<mVector2i>();
 
 
 	public List<GameObject> ObstaclePrefabs = new List<GameObject>();
+	public GameObject PlayerPrefab, FloorPrefab;
 
 	public float PercentSpacesFilled = 0.2f;
 	public int MinRoomSize = 5,
@@ -21,8 +38,54 @@ public class Room : MonoBehaviour
 
 	private GameRegion Game { get { return GameRegion.Instance; } }
 
+
+	private List<GameObject> invisibleWalls = new List<GameObject>();
 	private bool RoomNeedsCleaning = false;
 
+
+	/// <summary>
+	/// Gets the center of the tile at the given coordiante in this room.
+	/// </summary>
+	public Vector3 RoomCoordToPos(mVector2i roomCoord)
+	{
+		Vector3 pos = Game.RoomCoordToPos(Game.CurrentRoom);
+
+		int roomSize = RoomObstacles.GetLength(0);
+
+		Vector2 lerpCoord = new Vector2(roomCoord.X / (float)roomSize,
+									    roomCoord.Y / (float)roomSize);
+		//lerpCoord = new Vector2((lerpCoord.x * 2.0f) - 1.0f, (lerpCoord.y * 2.0f) - 1.0f);
+
+		float halfTileSize = 0.5f * (Game.RegionScale / RoomObstacles.GetLength(0));
+		Vector2 min = new Vector2(pos.x - (roomSize * halfTileSize),
+								  pos.z - (roomSize * halfTileSize)),
+				max = new Vector2(pos.x + (roomSize * halfTileSize),
+								  pos.z + (roomSize * halfTileSize));
+
+		return new Vector3(Mathf.Lerp(min.x, max.x, lerpCoord.x) + halfTileSize,
+						   0.0f,
+						   Mathf.Lerp(min.y, max.y, lerpCoord.y) + halfTileSize);
+	}
+	public mVector2i PosToRoomCoord(Vector3 pos)
+	{
+		Vector3 thisPos = Game.RoomCoordToPos(Game.CurrentRoom);
+
+		int roomSize = RoomObstacles.GetLength(0);
+		
+		float halfRoomSize = Game.RegionScale * 0.5f;
+		Vector2 min = new Vector2(pos.x - halfRoomSize,
+								  pos.z - halfRoomSize),
+				max = new Vector2(pos.x + halfRoomSize,
+								  pos.z + halfRoomSize);
+		float halfTileSize = halfRoomSize / RoomObstacles.GetLength(0);
+
+
+		Vector2 lerpCoord = new Vector2(Mathf.InverseLerp(min.x, max.x, pos.x - halfTileSize),
+										Mathf.InverseLerp(min.y, max.y, pos.z - halfTileSize));
+
+		return new mVector2i((int)(lerpCoord.x * roomSize),
+							 (int)(lerpCoord.y * roomSize));
+	}
 
 	/// <summary>
 	/// Finds a path from the given start to the given end.
@@ -48,7 +111,7 @@ public class Room : MonoBehaviour
 	/// Automatically cleans up the given current room if it hasn't been cleaned yet.
 	/// Returns all the empty positions in the room.
 	/// </summary>
-	public List<mVector2i> GenerateNewRoom(mVector2i oldRoom, mVector2i newRoom)
+	public void GenerateNewRoom(mVector2i oldRoom, mVector2i newRoom)
 	{
 		if (RoomNeedsCleaning)
 		{
@@ -60,51 +123,114 @@ public class Room : MonoBehaviour
 		List<mVector2i> freeSpaces = null;
 		int i = 0;
 		const int nTries = 40;
+		int roomSize = -1;
 		while (true)
 		{
-			freeSpaces = FillRoom();
-			if (IsRoomOpen(freeSpaces))
+			freeSpaces = FillRoom(out roomSize);
+
+			if (IsRoomOpen(roomSize, freeSpaces))
 				break;
 
 			i += 1;
 			if (i >= nTries)
 			{
-				Application.Quit();
 				Debug.LogError("Can't generate a valid room!");
-				return null;
+				Application.Quit();
+				break;
 			}
 		}
 
-		return freeSpaces;
-	}
-	private List<mVector2i> FillRoom()
-	{
-		List<mVector2i> freeSpaces = new List<mVector2i>();
+		FreeSpaces = freeSpaces;
 
-		int roomSize = UnityEngine.Random.Range(MinRoomSize, MaxRoomSize);
-		RoomGrid = new GameObject[roomSize, roomSize];
-		float objScale = 1.0f / (float)roomSize;
+		
+		Vector3 thisPos = Game.RoomCoordToPos(Game.CurrentRoom);
+		float objScale = Game.RegionScale / (float)roomSize;
+
+
+		//Generate obstacles.
 		for (int x = 0; x < roomSize; ++x)
 		{
 			for (int y = 0; y < roomSize; ++y)
 			{
-				if (UnityEngine.Random.value < PercentSpacesFilled)
+				if (RoomObstacles[x, y])
 				{
 					GameObject toUse = ObstaclePrefabs[UnityEngine.Random.Range(0, ObstaclePrefabs.Count)];
 					Transform objTr = ((GameObject)Instantiate(toUse)).transform;
 					objTr.localScale *= objScale;
+					
+					Vector3 floorPos = RoomCoordToPos(new mVector2i(x, y));
+					objTr.position = new Vector3(floorPos.x, objTr.position.y, floorPos.z);
+
+					Obstacles.Add(objTr.collider);
+				}
+			}
+		}
+
+
+		//Put the player in a random free space.
+		int index = UnityEngine.Random.Range(0, freeSpaces.Count);
+		Transform playerTr = ((GameObject)Instantiate(PlayerPrefab)).transform;
+		playerTr.position = RoomCoordToPos(freeSpaces[index]);
+		playerTr.localScale *= objScale;
+
+
+		//Generate enemies.
+		RoomPawns = new List<Pawn>();
+		
+
+		//Place down the floor.
+		Transform floorTr = ((GameObject)Instantiate(FloorPrefab)).transform;
+		floorTr.position = thisPos + new Vector3(0.0f, 0.005f, 0.0f);
+		floorTr.localScale *= Game.RegionScale;
+
+
+		//Create invisible walls.
+
+		float halfRoomSize = Game.RegionScale * 0.5f;
+		Vector2 min = new Vector2(thisPos.x - halfRoomSize,
+								  thisPos.z - halfRoomSize),
+				max = new Vector2(thisPos.x + halfRoomSize,
+								  thisPos.z + halfRoomSize);
+
+		float wallSize = 1.0f * Game.RegionScale;
+		invisibleWalls.Add(new GameObject("Left Wall"));
+		invisibleWalls[0].transform.position = thisPos + new Vector3(-halfRoomSize - (wallSize * 0.5f), 0.0f, 0.0f);
+		invisibleWalls.Add(new GameObject("Right Wall"));
+		invisibleWalls[1].transform.position = thisPos + new Vector3(halfRoomSize + (wallSize * 0.5f), 0.0f, 0.0f);
+		invisibleWalls.Add(new GameObject("Top Wall"));
+		invisibleWalls[2].transform.position = thisPos + new Vector3(0.0f, 0.0f, -halfRoomSize - (wallSize * 0.5f));
+		invisibleWalls.Add(new GameObject("Bottom Wall"));
+		invisibleWalls[3].transform.position = thisPos + new Vector3(0.0f, 0.0f, halfRoomSize + (wallSize * 0.5f));
+		foreach (GameObject wall in invisibleWalls)
+			wall.AddComponent<BoxCollider>().size = new Vector3(wallSize, 1.0f, wallSize);
+	}
+	private List<mVector2i> FillRoom(out int outRoomSize)
+	{
+		List<mVector2i> freeSpaces = new List<mVector2i>();
+
+		//Generate the spaces.
+		outRoomSize = UnityEngine.Random.Range(MinRoomSize, MaxRoomSize);
+		RoomObstacles = new bool[outRoomSize, outRoomSize];
+		float objScale = Game.RegionScale / (float)outRoomSize;
+		for (int x = 0; x < outRoomSize; ++x)
+		{
+			for (int y = 0; y < outRoomSize; ++y)
+			{
+				if (UnityEngine.Random.value < PercentSpacesFilled)
+				{
+					RoomObstacles[x, y] = true;
 				}
 				else
 				{
-					RoomGrid[x, y] = null;
 					freeSpaces.Add(new mVector2i(x, y));
+					RoomObstacles[x, y] = false;
 				}
 			}
 		}
 
 		return freeSpaces;
 	}
-	private bool IsRoomOpen(List<mVector2i> freeSpaces)
+	private bool IsRoomOpen(int roomSize, List<mVector2i> freeSpaces)
 	{
 		if (freeSpaces.Count == 0) return false;
 
@@ -112,7 +238,7 @@ public class Room : MonoBehaviour
 		//If there are any spots that weren't touched by the flood-fill AND
 		//    are a free space, then the room isn't fully open.
 
-		bool[,] isReached = new bool[RoomGrid.GetLength(0), RoomGrid.GetLength(1)];
+		bool[,] isReached = new bool[roomSize, roomSize];
 		for (int x = 0; x < isReached.GetLength(0); ++x)
 			for (int y = 0; y < isReached.GetLength(1); ++y)
 				isReached[x, y] = false;
@@ -176,5 +302,16 @@ public class Room : MonoBehaviour
 	public void CleanupCurrentRoom(mVector2i room)
 	{
 		RoomNeedsCleaning = false;
+
+		//Remove the room's obstacles from the physics engine.
+		Obstacles.ForEach(c => Destroy(c));
+		Obstacles.Clear();
+
+		invisibleWalls.ForEach(w => Destroy(w));
+		invisibleWalls.Clear();
+
+		RoomObstacles = null;
+
+		Destroy(Player.Instance.gameObject);
 	}
 }

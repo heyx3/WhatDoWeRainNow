@@ -82,6 +82,7 @@
     <Compile Include="Assets\OVR\Scripts\Util\OVRUGUI.cs" />
     <Compile Include="Assets\OVR\Scripts\Util\OVRVisionGuide.cs" />
     <Compile Include="Assets\Scripts\DroppableObject.cs" />
+    <Compile Include="Assets\Scripts\GameInit.cs" />
     <Compile Include="Assets\Scripts\GameRegion.cs" />
     <Compile Include="Assets\Scripts\ObjectBounce.cs" />
     <Compile Include="Assets\Scripts\Pathing\BaseGraphDeclarations.cs" />
@@ -90,9 +91,12 @@
     <Compile Include="Assets\Scripts\Pathing\PathFinder.cs" />
     <Compile Include="Assets\Scripts\Pawn\Enemy.cs" />
     <Compile Include="Assets\Scripts\Pawn\Pawn.cs" />
-    <Compile Include="Assets\Scripts\Player.cs" />
+    <Compile Include="Assets\Scripts\Pawn\Player.cs" />
+    <Compile Include="Assets\Scripts\PlayerCamera.cs" />
     <Compile Include="Assets\Scripts\Room.cs" />
     <Compile Include="Assets\Scripts\TweenPosition.cs" />
+    <Compile Include="Assets\Scripts\UI\QuitButton.cs" />
+    <Compile Include="Assets\Scripts\UI\RiftUIElement.cs" />
     <Compile Include="Assets\Scripts\Vector2i.cs" />
   </ItemGroup>
   <ItemGroup>
