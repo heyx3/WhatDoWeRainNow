@@ -66,6 +66,9 @@ public class Room : MonoBehaviour
 						   0.0f,
 						   Mathf.Lerp(min.y, max.y, lerpCoord.y) + halfTileSize);
 	}
+	/// <summary>
+	/// Gets the room coordinate of the tile that the given position is inside.
+	/// </summary>
 	public mVector2i PosToRoomCoord(Vector3 pos)
 	{
 		Vector3 thisPos = Game.RoomCoordToPos(Game.CurrentRoom);
@@ -73,15 +76,15 @@ public class Room : MonoBehaviour
 		int roomSize = RoomObstacles.GetLength(0);
 		
 		float halfRoomSize = Game.RegionScale * 0.5f;
-		Vector2 min = new Vector2(pos.x - halfRoomSize,
-								  pos.z - halfRoomSize),
-				max = new Vector2(pos.x + halfRoomSize,
-								  pos.z + halfRoomSize);
+		Vector2 min = new Vector2(thisPos.x - halfRoomSize,
+								  thisPos.z - halfRoomSize),
+				max = new Vector2(thisPos.x + halfRoomSize,
+								  thisPos.z + halfRoomSize);
 		float halfTileSize = halfRoomSize / RoomObstacles.GetLength(0);
 
 
-		Vector2 lerpCoord = new Vector2(Mathf.InverseLerp(min.x, max.x, pos.x - halfTileSize),
-										Mathf.InverseLerp(min.y, max.y, pos.z - halfTileSize));
+		Vector2 lerpCoord = new Vector2(Mathf.InverseLerp(min.x, max.x, pos.x),
+										Mathf.InverseLerp(min.y, max.y, pos.z));
 
 		return new mVector2i((int)(lerpCoord.x * roomSize),
 							 (int)(lerpCoord.y * roomSize));
