@@ -101,6 +101,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   KillAfterTime: 1.49899995
+  Damage: .400000006
 --- !u!198 &19830106
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -278,7 +279,7 @@ ParticleSystem:
         rgba: 4278202193
       minMaxState: 0
     startSize:
-      scalar: .159999996
+      scalar: .200000003
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -350,7 +351,7 @@ ParticleSystem:
     serializedVersion: 2
     enabled: 1
     type: 7
-    radius: .0900000036
+    radius: .182999998
     angle: 7.48999977
     length: 5
     boxX: 1

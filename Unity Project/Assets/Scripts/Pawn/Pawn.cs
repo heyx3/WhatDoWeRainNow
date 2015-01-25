@@ -65,10 +65,15 @@ public abstract class Pawn : MonoBehaviour
 	{
 		MyTransform = transform;
 		Controller = GetComponent<CharacterController>();
+
+		Health = 1.0f;
+
+		TimeLeftTillRecharged = 1.0f;
 	}
 	protected virtual void Update()
 	{
-		TimeLeftTillRecharged -= Time.deltaTime;
+		if (Controller.enabled)
+			TimeLeftTillRecharged -= Time.deltaTime;
 	}
 	protected virtual void LateUpdate()
 	{
@@ -108,9 +113,9 @@ public abstract class Pawn : MonoBehaviour
 
 			case WeaponTypes.Paper:
 				TimeLeftTillRecharged = PaperRechargeTime;
-				//PaperAttack pAttack = ((GameObject)Instantiate(GameConstants.PaperPrefab)).GetComponent<PaperAttack>();
-				//pAttack.transform.position = MyTransform.position;
-				//pAttack.CameFromPlayer = (this == Player.Instance);
+				PaperAttack pAttack = ((GameObject)Instantiate(GameConstants.PaperPrefab)).GetComponent<PaperAttack>();
+				pAttack.transform.position = MyTransform.position;
+				pAttack.CameFromPlayer = (this == Player.Instance);
 				break;
 
 			case WeaponTypes.Scissors:

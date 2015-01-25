@@ -12,10 +12,6 @@ public class GameConstants : MonoBehaviour
 	public static float RockAttackDist { get { return instance._RockAttackDist; }  }
 	public float _RockAttackDist = 0.05f;
 
-	
-	public static float PaperAttackDamage { get { return instance._PaperAttackDamage; }  }
-	public float _PaperAttackDamage = 0.275f;
-
 
 	public static GameObject RockPrefab { get { return instance._RockPrefab; } }
 	public GameObject _RockPrefab;

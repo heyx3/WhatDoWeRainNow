@@ -14,6 +14,7 @@ public class PlayerCamera : MonoBehaviour
 
 	public float UIHighlightScale = 1.5f;
 	public Vector3 RoomOffset = new Vector3(-1.0f, 1.0f, 0.0f);
+	public RestartButton RestartButton;
 
 
 	private RiftUIElement pointedAtBefore = null;

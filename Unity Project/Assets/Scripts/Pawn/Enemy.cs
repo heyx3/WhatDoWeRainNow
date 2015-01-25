@@ -46,7 +46,8 @@ public class Enemy : Pawn
 
 			//If this enemy is close enough to the target, just snap to it.
 			float distSqr = toTarget.sqrMagnitude;
-			if (distSqr < (MovementSpeed * MovementSpeed))
+			float moveSpeed = MovementSpeed * Time.deltaTime;
+			if (distSqr < (moveSpeed * moveSpeed))
 			{
 				MyTransform.position = new Vector3(PathAlongFloor[0].x, pos.y, PathAlongFloor[0].y);
 				PathAlongFloor.RemoveAt(0);
@@ -54,7 +55,7 @@ public class Enemy : Pawn
 			//Otherwise, keep moving like normal.
 			else
 			{
-				toTarget = toTarget.normalized * MovementSpeed * Time.deltaTime;
+				toTarget = toTarget.normalized * moveSpeed;
 				Controller.Move(new Vector3(toTarget.x, 0.0f, toTarget.y));
 			}
 		}

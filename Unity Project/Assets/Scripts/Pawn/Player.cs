@@ -63,6 +63,8 @@ public class Player : Pawn
 
 			foreach (Pawn p in GameRegion.Instance.RoomObj.RoomPawns)
 				Destroy(p.gameObject);
+
+			PlayerCamera.Instance.RestartButton.gameObject.SetActive(true);
 		}
 	}
 }
