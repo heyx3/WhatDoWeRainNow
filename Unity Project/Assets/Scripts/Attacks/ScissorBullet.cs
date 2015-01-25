@@ -20,6 +20,8 @@ public class ScissorBullet : MonoBehaviour
 	private Rigidbody rgd;
 	private Transform tr;
 
+	private Vector3 GetMovementDir() { return tr.up; }
+
 
 	void Awake()
 	{
@@ -28,17 +30,21 @@ public class ScissorBullet : MonoBehaviour
 
 		if (!collider.isTrigger)
 			Debug.LogError("Bullets need to use trigger colliders!");
-		if (!rgd.isKinematic)
-			Debug.LogError("Bullets should be kinematic rigidbodies!");
+		if (rgd.isKinematic)
+			Debug.LogError("Bullets shouldn't be kinematic rigidbodies!");
 		
 		DestroyParticlesChild.SetActive(false);
 	}
 	void FixedUpdate()
 	{
-		rgd.velocity = tr.forward * Speed;
+		rgd.velocity = GetMovementDir() * Speed;
 	}
 	void OnTriggerEnter(Collider other)
 	{
+		//Ignore collisions with other bullets.
+		if (other.GetComponent<ScissorBullet>() != null)
+			return;
+
 		Pawn pawn = other.GetComponent<Pawn>();
 		if (pawn != null)
 		{
@@ -59,6 +65,14 @@ public class ScissorBullet : MonoBehaviour
 		DestroyParticlesChild.SetActive(true);
 		StartCoroutine(KillAfterTime());
 	}
+
+	void OnDrawGizmos()
+	{
+		tr = transform;
+		Gizmos.color = Color.white;
+		Gizmos.DrawRay(tr.position, GetMovementDir());
+	}
+
 
 	private System.Collections.IEnumerator KillAfterTime()
 	{

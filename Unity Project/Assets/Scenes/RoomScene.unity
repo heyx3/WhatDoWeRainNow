@@ -101,7 +101,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1041827691}
-  m_RootOrder: 2
+  m_RootOrder: 3
 --- !u!81 &113682447
 AudioListener:
   m_ObjectHideFlags: 0
@@ -137,7 +137,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1041827691}
-  m_RootOrder: 3
+  m_RootOrder: 4
 --- !u!20 &374122675
 Camera:
   m_ObjectHideFlags: 0
@@ -198,7 +198,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1041827691}
-  m_RootOrder: 1
+  m_RootOrder: 2
 --- !u!20 &377014549
 Camera:
   m_ObjectHideFlags: 0
@@ -232,6 +232,92 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: .0219999999
+--- !u!1 &452295253
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 452295255}
+  - 82: {fileID: 452295254}
+  m_Layer: 0
+  m_Name: Ambient Noise
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!82 &452295254
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 452295253}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_audioClip: {fileID: 8300000, guid: 26855282ea229d74ab0e98b101f9b2b4, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+--- !u!4 &452295255
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 452295253}
+  m_LocalRotation: {x: 0, y: -.707106829, z: 0, w: .707106829}
+  m_LocalPosition: {x: -0, y: -4.11000013, z: 4.44000053}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1041827691}
+  m_RootOrder: 1
 --- !u!1 &528863140
 GameObject:
   m_ObjectHideFlags: 0
@@ -307,7 +393,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aed59efef84f63e45b72a85410f78373, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  WaitTime: 5
+  WaitTime: 1
 --- !u!114 &528863145
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -319,20 +405,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8666dce930baf04e9b84ec7443005eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _RockAttackDist: .0500000007
-  _ScissorBulletSpeed: .0500000007
-  _PaperAttackDuration: .5
-  _RockAttackDamage: .400000006
-  _ScissorBulletDamage: .5
+  _RockAttackDist: .100000001
   _PaperAttackDamage: .275000006
-  _PaperParticles: {fileID: 0}
-  _ScissorsParticles: {fileID: 0}
   _RockPrefab: {fileID: 130106, guid: 4bab3a464fe40a24b81dcfb8c8d18efe, type: 2}
   _PaperPrefab: {fileID: 0}
-  _ScissorsPrefab: {fileID: 0}
-  _RockAttackAudio: {fileID: 0}
+  _ScissorsPrefab: {fileID: 140704, guid: ac2a0b49580e41a489907dc8d16d4427, type: 2}
+  _RockAttackAudio: {fileID: 8300000, guid: 01680c7c413b0d84f9135d8b2b8b3054, type: 3}
   _PaperAttackAudio: {fileID: 0}
-  _ScissorsAttackAudio: {fileID: 0}
+  _ScissorsAttackAudio: {fileID: 8300000, guid: 72ed9b653453b9e4cb9ee79a4a83ab73,
+    type: 3}
 --- !u!1001 &625392908
 Prefab:
   m_ObjectHideFlags: 0
@@ -624,6 +705,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 724028507}
+  - {fileID: 452295255}
   - {fileID: 377014548}
   - {fileID: 113682446}
   - {fileID: 374122674}

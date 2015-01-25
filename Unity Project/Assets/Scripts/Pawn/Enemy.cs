@@ -8,7 +8,7 @@ using UnityEngine;
 /// <summary>
 /// A computer-controlled enemy with some kind of behavior each turn.
 /// </summary>
-public abstract class Enemy : Pawn
+public class Enemy : Pawn
 {
 	public List<Vector2> PathAlongFloor = new List<Vector2>();
 

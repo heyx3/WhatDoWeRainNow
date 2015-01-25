@@ -341,7 +341,7 @@ MonoBehaviour:
   RockRechargeTime: .5
   PaperRechargeTime: 1
   ScissorsRechargeTime: 2
-  MoveSpeed: .00999999978
+  MoveSpeed: .00499999989
 --- !u!114 &11486666
 MonoBehaviour:
   m_ObjectHideFlags: 1

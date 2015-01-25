@@ -24,9 +24,13 @@ public class ScissorAttack : Attack
 		b2.position = pos;
 		b3.position = pos;
 		b4.position = pos;
-		b1.Rotate(new Vector3(0.0f, 1.0f, 0.0f), 45.0f);
-		b2.Rotate(new Vector3(0.0f, 1.0f, 0.0f), 135.0f);
-		b3.Rotate(new Vector3(0.0f, 1.0f, 0.0f), 225.0f);
-		b4.Rotate(new Vector3(0.0f, 1.0f, 0.0f), 315.0f);
+		b1.Rotate(new Vector3(0.0f, 1.0f, 0.0f), 45.0f, Space.World);
+		b2.Rotate(new Vector3(0.0f, 1.0f, 0.0f), 135.0f, Space.World);
+		b3.Rotate(new Vector3(0.0f, 1.0f, 0.0f), 225.0f, Space.World);
+		b4.Rotate(new Vector3(0.0f, 1.0f, 0.0f), 315.0f, Space.World);
+		b1.GetComponent<ScissorBullet>().CameFromPlayer = CameFromPlayer;
+		b2.GetComponent<ScissorBullet>().CameFromPlayer = CameFromPlayer;
+		b3.GetComponent<ScissorBullet>().CameFromPlayer = CameFromPlayer;
+		b4.GetComponent<ScissorBullet>().CameFromPlayer = CameFromPlayer;
 	}
 }
