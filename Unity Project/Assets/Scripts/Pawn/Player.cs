@@ -24,8 +24,8 @@ public class Player : Pawn
 			return;
 
 
-		Vector2 motion = new Vector2(Input.GetAxis("L_XAxis_1"),
-									 Input.GetAxis("L_YAxis_1"));
+		Vector2 motion = new Vector2(-Input.GetAxis("L_YAxis_1"),
+									 -Input.GetAxis("L_XAxis_1"));
 		if (Input.GetKey(KeyCode.A))
 			motion.y = 1.0f;
 		if (Input.GetKey(KeyCode.D))
@@ -39,15 +39,15 @@ public class Player : Pawn
 		CollisionFlags moveResult = Controller.Move(new Vector3(motion.x, 0.0f, motion.y));
 
 		GamepadState gState = GamePad.GetState(GamePad.Index.Any);
-		if (gState.B || Input.GetMouseButton(0))
+		if (gState.B || Input.GetMouseButton(1))
 		{
 			Attack(WeaponTypes.Rock);
 		}
-		else if (gState.Y || Input.GetMouseButton(1))
+		else if (gState.Y || Input.GetMouseButton(2))
 		{
 			Attack(WeaponTypes.Paper);
 		}
-		else if (gState.X || Input.GetMouseButton(2))
+		else if (gState.X || Input.GetMouseButton(0))
 		{
 			Attack(WeaponTypes.Scissors);
 		}

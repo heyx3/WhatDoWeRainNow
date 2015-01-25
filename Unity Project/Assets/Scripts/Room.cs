@@ -39,12 +39,26 @@ public class Room : MonoBehaviour
 	public int NEnemiesMin = 1,
 			   NEnemiesMax = 4;
 
+	public bool DEBUG_KillAllEnemies = false;
+
 
 	private GameRegion Game { get { return GameRegion.Instance; } }
 
 
 	private List<GameObject> invisibleWalls = new List<GameObject>();
 	private bool RoomNeedsCleaning = false;
+
+
+	void Update()
+	{
+		if (DEBUG_KillAllEnemies)
+		{
+			DEBUG_KillAllEnemies = false;
+			foreach (Pawn p in RoomPawns)
+				Destroy(p.gameObject);
+			RoomPawns.Clear();
+		}
+	}
 
 
 	/// <summary>

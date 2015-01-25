@@ -34,28 +34,16 @@ public class GameRegion : MonoBehaviour
 		
 		Vector2 lerpCoord = new Vector2(roomCoord.X / (float)nRoomsWidth,
 									    roomCoord.Y / (float)nRoomsHeight);
-		//lerpCoord = new Vector2((lerpCoord.x * 2.0f) - 1.0f, (lerpCoord.y * 2.0f) - 1.0f);
 
 		float halfRoomSize = 0.5f * RegionScale;
 		Vector2 min = new Vector2(pos.x - (nRoomsWidth * halfRoomSize),
 								  pos.z - (nRoomsHeight * halfRoomSize)),
 				max = new Vector2(pos.x + (nRoomsWidth * halfRoomSize),
 								  pos.z + (nRoomsHeight * halfRoomSize));
-		min += new Vector2(halfRoomSize, halfRoomSize);
-		max -= new Vector2(halfRoomSize, halfRoomSize);
 
-		return new Vector3(Mathf.Lerp(min.x, max.x, lerpCoord.x),
+		return new Vector3(Mathf.Lerp(min.x, max.x, lerpCoord.x) + halfRoomSize,
 						   0.0f,
-						   Mathf.Lerp(min.y, max.y, lerpCoord.y));
-
-
-
-		Vector3 roomSize = new Vector3(RegionScale * nRoomsWidth, 0.0f, RegionScale * nRoomsHeight);
-		return new Vector3(Mathf.Lerp(pos.x - (roomSize.x * 0.5f), pos.x + (roomSize.x * 0.5f),
-									  (roomCoord.X / (float)nRoomsWidth)),
-						   pos.y,
-						   Mathf.Lerp(pos.z - (roomSize.z * 0.5f), pos.z + (roomSize.z * 0.5f),
-									  (roomCoord.Y / (float)nRoomsHeight)));
+						   Mathf.Lerp(min.y, max.y, lerpCoord.y) + halfRoomSize);
 	}
 	/// <summary>
 	/// Switches play to the given next room.

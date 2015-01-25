@@ -16,6 +16,21 @@ public class Enemy : Pawn
 				 MaxPathingUpdateTime = 6.0f;
 
 
+	void OnDrawGizmos()
+	{
+		if (PathAlongFloor.Count == 0) return;
+
+		Gizmos.color = new Color(0.0f, 0.0f, 0.0f, 1.0f);
+
+		Gizmos.DrawSphere(new Vector3(PathAlongFloor[0].x, 0.0f, PathAlongFloor[0].y), 0.05f);
+		if (PathAlongFloor.Count > 1)
+		{
+			Gizmos.color = new Color(0.5f, 0.5f, 0.5f, 1.0f);
+			Gizmos.DrawSphere(new Vector3(PathAlongFloor[1].x, 0.0f, PathAlongFloor[0].y), 0.05f);
+		}
+	}
+
+
 	void Start()
 	{
 		UpdatePath();
@@ -33,14 +48,6 @@ public class Enemy : Pawn
 		Vector3 pos = MyTransform.position;
 
 
-		bool DEbug = (this == GameRegion.Instance.RoomObj.RoomPawns[0]);
-		Room rm = GameRegion.Instance.RoomObj;
-
-		//if (DEbug)
-		//	Debug.Log("This: " + pos + " " + rm.PosToRoomCoord(pos) +
-		//			  "; target: " + new Vector3(PathAlongFloor[0].x, 0.0f, PathAlongFloor[0].y) + " " + rm.PosToRoomCoord(new Vector3(PathAlongFloor[0].x, 0.0f, PathAlongFloor[0].y)));
-
-
 		//If the path is finished, calculate a new path.
 		if (PathAlongFloor.Count == 0)
 		{
@@ -55,9 +62,8 @@ public class Enemy : Pawn
 			//If this enemy is close enough to the target, just snap to it.
 			float dist = toTarget.magnitude;
 			float moveSpeed = MoveSpeed * Time.deltaTime;
-			if (dist < moveSpeed)
+			if (dist < 0.001f)//moveSpeed)
 			{
-				MyTransform.position = new Vector3(PathAlongFloor[0].x, pos.y, PathAlongFloor[0].y);
 				PathAlongFloor.RemoveAt(0);
 			}
 			//Otherwise, keep moving like normal.

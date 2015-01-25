@@ -13,7 +13,10 @@ public class PlayerCamera : MonoBehaviour
 
 
 	public float UIHighlightScale = 1.5f;
-	public Vector3 RoomOffset = new Vector3(-1.0f, 1.0f, 0.0f);
+	public Color UIColorScale = new Color(0.8f, 0.8f, 0.8f, 0.8f);
+
+
+	public Vector3 RoomOffset = new Vector3(-2.0f, 2.0f, 0.0f);
 	public RestartButton RestartButton;
 
 
@@ -41,6 +44,7 @@ public class PlayerCamera : MonoBehaviour
 				if (pointedAtBefore != null)
 				{
 					pointedAtBefore.MyTransform.localScale /= UIHighlightScale;
+					ScaleColor(pointedAtBefore.renderer.material, false);
 				}
 			}
 			else
@@ -48,11 +52,14 @@ public class PlayerCamera : MonoBehaviour
 				if (pointedAtBefore == null)
 				{
 					pointingAt.MyTransform.localScale *= UIHighlightScale;
+					ScaleColor(pointingAt.renderer.material, true);
 				}
 				else if (pointedAtBefore != pointingAt)
 				{
 					pointingAt.MyTransform.localScale *= UIHighlightScale;
+					ScaleColor(pointingAt.renderer.material, true);
 					pointedAtBefore.MyTransform.localScale /= UIHighlightScale;
+					ScaleColor(pointedAtBefore.renderer.material, false);
 				}
 			}
 
@@ -93,5 +100,13 @@ public class PlayerCamera : MonoBehaviour
 			return;
 
 		uiObj.Selected();
+	}
+
+	private void ScaleColor(Material mat, bool scaleForward)
+	{
+		Color col = mat.color;
+		if (scaleForward)
+			mat.color = new Color(col.r * UIColorScale.r, col.g * UIColorScale.g, col.b * UIColorScale.b, col.a * UIColorScale.a);
+		else mat.color = new Color(col.r / UIColorScale.r, col.g / UIColorScale.g, col.b / UIColorScale.b, col.a / UIColorScale.a);
 	}
 }
