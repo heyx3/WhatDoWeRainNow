@@ -83,14 +83,32 @@ public class GameRegion : MonoBehaviour
 	{
 		if (RoomObj.RoomPawns.Count == 0 && Player.Instance != null)
 		{
-			GetComponent<AudioSource>().PlayOneShot(GameConstants.WinFight);
-
 			RoomsCleared[CurrentRoom.X, CurrentRoom.Y] = true;
-			mVector2i newRoom = CurrentRoom;
-			while (RoomsCleared[newRoom.X, newRoom.Y])
-				newRoom = new mVector2i(UnityEngine.Random.Range(0, RoomsCleared.GetLength(0)),
-										UnityEngine.Random.Range(0, RoomsCleared.GetLength(1)));
-			SwitchRooms(newRoom);
+
+			bool allCleared = true;
+			for (int x = 0; x < RoomsCleared.GetLength(0); ++x)
+				for (int y = 0; y < RoomsCleared.GetLength(1); ++y)
+					if (!RoomsCleared[x, y])
+						allCleared = false;
+
+			if (allCleared)
+			{
+				GetComponent<AudioSource>().PlayOneShot(GameConstants.WinGame);
+
+				RoomObj.CleanupCurrentRoom(CurrentRoom);
+
+				PlayerCamera.Instance.RestartButton.gameObject.SetActive(true);
+			}
+			else
+			{
+				GetComponent<AudioSource>().PlayOneShot(GameConstants.WinFight);
+
+				mVector2i newRoom = CurrentRoom;
+				while (RoomsCleared[newRoom.X, newRoom.Y])
+					newRoom = new mVector2i(UnityEngine.Random.Range(0, RoomsCleared.GetLength(0)),
+											UnityEngine.Random.Range(0, RoomsCleared.GetLength(1)));
+				SwitchRooms(newRoom);
+			}
 		}
 	}
 	void OnDrawGizmos()

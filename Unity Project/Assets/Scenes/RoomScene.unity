@@ -577,7 +577,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   RegionScale: 2.36999989
-  nRoomsWidth: 2
+  nRoomsWidth: 3
   nRoomsHeight: 2
   ChangeRoomsTime: 4
 --- !u!4 &528863142
@@ -606,6 +606,9 @@ MonoBehaviour:
   ObstaclePrefabs:
   - {fileID: 126670, guid: 4e62ab5578b024047bd0744898899609, type: 2}
   - {fileID: 154310, guid: e9f96107d17bb9c48bb8894ac4f746c6, type: 2}
+  - {fileID: 142198, guid: 31c787ea777222a419cfb1097f0606ee, type: 2}
+  - {fileID: 178110, guid: 7ffe44fbae7b9824ab33ec4262beee8d, type: 2}
+  - {fileID: 197438, guid: a24cf0dde9496e743ba38f2c3ec43f95, type: 2}
   EnemyPrefabs:
   - {fileID: 137664, guid: 72b7ce8533cc78048a65aa43395d27c1, type: 2}
   PlayerPrefab: {fileID: 132718, guid: e2c5caf8eff50814c8d4e2266443fd8a, type: 2}
@@ -627,7 +630,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aed59efef84f63e45b72a85410f78373, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  WaitTime: 1
+  WaitTime: 5
 --- !u!114 &528863145
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -649,7 +652,8 @@ MonoBehaviour:
     type: 3}
   _ScissorsBulletHit: {fileID: 8300000, guid: 1ac689d6ed9a27840bc7d521b56ca1b4, type: 3}
   _LoseFight: {fileID: 8300000, guid: 54abae019e6cf224c9da2330b2679633, type: 3}
-  _WinFight: {fileID: 8300000, guid: 096d310e0c9cc1549ac91e4e67a1be5a, type: 3}
+  _WinFight: {fileID: 8300000, guid: b89e5f421df348e4bb0eeac005e57c50, type: 3}
+  _WinGame: {fileID: 8300000, guid: 096d310e0c9cc1549ac91e4e67a1be5a, type: 3}
 --- !u!82 &528863146
 AudioSource:
   m_ObjectHideFlags: 0

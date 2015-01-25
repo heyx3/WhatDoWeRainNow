@@ -40,8 +40,11 @@ public class GameConstants : MonoBehaviour
 	public static AudioClip LoseFight { get { return instance._LoseFight; } }
 	public AudioClip _LoseFight;
 
-	public static AudioClip WinFight { get { return instance._WinFight; } }
+	public static AudioClip WinFight { get { return instance._WinGame; } }
 	public AudioClip _WinFight;
+
+	public static AudioClip WinGame { get { return instance._WinFight; } }
+	public AudioClip _WinGame;
 
 
 	void Awake()
