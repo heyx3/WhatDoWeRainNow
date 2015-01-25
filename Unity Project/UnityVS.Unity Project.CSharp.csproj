@@ -81,7 +81,10 @@
     <Compile Include="Assets\OVR\Scripts\Util\OVRScreenFade.cs" />
     <Compile Include="Assets\OVR\Scripts\Util\OVRUGUI.cs" />
     <Compile Include="Assets\OVR\Scripts\Util\OVRVisionGuide.cs" />
+    <Compile Include="Assets\Scripts\Attacks\Attack.cs" />
     <Compile Include="Assets\Scripts\Attacks\RockAttack.cs" />
+    <Compile Include="Assets\Scripts\Attacks\ScissorAttack.cs" />
+    <Compile Include="Assets\Scripts\Attacks\ScissorBullet.cs" />
     <Compile Include="Assets\Scripts\DroppableObject.cs" />
     <Compile Include="Assets\Scripts\GameConstants.cs" />
     <Compile Include="Assets\Scripts\GameInit.cs" />

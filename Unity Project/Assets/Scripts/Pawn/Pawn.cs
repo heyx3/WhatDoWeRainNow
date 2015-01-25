@@ -101,14 +101,23 @@ public abstract class Pawn : MonoBehaviour
 		{
 			case WeaponTypes.Rock:
 				TimeLeftTillRecharged = RockRechargeTime;
+				RockAttack rAttack = ((GameObject)Instantiate(GameConstants.RockPrefab)).GetComponent<RockAttack>();
+				rAttack.transform.position = MyTransform.position;
+				rAttack.CameFromPlayer = (this == Player.Instance);
 				break;
 
 			case WeaponTypes.Paper:
 				TimeLeftTillRecharged = PaperRechargeTime;
+				//PaperAttack pAttack = ((GameObject)Instantiate(GameConstants.PaperPrefab)).GetComponent<PaperAttack>();
+				//pAttack.transform.position = MyTransform.position;
+				//pAttack.CameFromPlayer = (this == Player.Instance);
 				break;
 
 			case WeaponTypes.Scissors:
 				TimeLeftTillRecharged = ScissorsRechargeTime;
+				ScissorAttack sAttack = ((GameObject)Instantiate(GameConstants.ScissorsPrefab)).GetComponent<ScissorAttack>();
+				sAttack.transform.position = MyTransform.position;
+				sAttack.CameFromPlayer = (this == Player.Instance);
 				break;
 
 			default: throw new NotImplementedException();

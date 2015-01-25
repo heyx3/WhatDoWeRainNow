@@ -11,29 +11,20 @@ public class GameConstants : MonoBehaviour
 	
 	public static float RockAttackDist { get { return instance._RockAttackDist; }  }
 	public float _RockAttackDist = 0.05f;
-	
-	public static float ScissorBulletSpeed { get { return instance._ScissorBulletSpeed; }  }
-	public float _ScissorBulletSpeed = 0.05f;
-	
-	public static float PaperAttackDuration { get { return instance._PaperAttackDuration; }  }
-	public float _PaperAttackDuration = 0.5f;
 
-	
-	public static float RockAttackDamage { get { return instance._RockAttackDamage; }  }
-	public float _RockAttackDamage = 0.4f;
-	
-	public static float ScissorBulletDamage { get { return instance._ScissorBulletDamage; }  }
-	public float _ScissorBulletDamage = 0.5f;
 	
 	public static float PaperAttackDamage { get { return instance._PaperAttackDamage; }  }
 	public float _PaperAttackDamage = 0.275f;
 
 
-	public static GameObject PaperParticles { get { return instance._PaperParticles; } }
-	public GameObject _PaperParticles;
+	public static GameObject RockPrefab { get { return instance._RockPrefab; } }
+	public GameObject _RockPrefab;
 
-	public static GameObject ScissorsParticles { get { return instance._ScissorsParticles; } }
-	public GameObject _ScissorsParticles;
+	public static GameObject PaperPrefab { get { return instance._PaperPrefab; } }
+	public GameObject _PaperPrefab;
+
+	public static GameObject ScissorsPrefab { get { return instance._ScissorsPrefab; } }
+	public GameObject _ScissorsPrefab;
 
 	
 	public static AudioClip RockAttackAudio { get { return instance._RockAttackAudio; } }

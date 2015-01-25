@@ -3,21 +3,16 @@ using UnityEngine;
 
 
 [RequireComponent(typeof(AudioSource))]
-public class RockAttack : MonoBehaviour
+public class RockAttack : Attack
 {
-	/// <summary>
-	/// Gets the horizontal component of the given vector.
-	/// </summary>
-	private static Vector2 Horizontal(Vector3 v)
-	{
-		return new Vector2(v.x, v.z);
-	}
+	public float KillAfterTime = 1.499f;
+	public float Damage = 0.4f;
 
-	public bool CameFromPlayer;
 
 	void Start()
 	{
 		GetComponent<AudioSource>().PlayOneShot(GameConstants.RockAttackAudio);
+
 
 		Vector2 myPos = Horizontal(transform.position);
 		float distSqr = GameConstants.RockAttackDist * GameConstants.RockAttackDist;
@@ -26,13 +21,15 @@ public class RockAttack : MonoBehaviour
 		{
 			foreach (Pawn enemy in GameRegion.Instance.RoomObj.RoomPawns)
 				if (distSqr >= (Horizontal(enemy.MyTransform.position) - myPos).sqrMagnitude)
-					enemy.Damage(GameConstants.RockAttackDamage);
+					enemy.Damage(Damage);
 		}
 		else
 		{
 			if (distSqr >= (Horizontal(Player.Instance.MyTransform.position) - myPos).sqrMagnitude)
-				Player.Instance.Damage(GameConstants.RockAttackDamage);
+				Player.Instance.Damage(Damage);
 		}
+
+		StartCoroutine(KillAfterTimeCoroutine(KillAfterTime));
 	}
 
 
@@ -41,7 +38,7 @@ public class RockAttack : MonoBehaviour
 		GameConstants consts = FindObjectOfType<GameConstants>();
 		if (consts == null) return;
 
-		Gizmos.color = new Color(0.4f, 0.05f, 0.05f, 0.1f);
+		Gizmos.color = new Color(0.4f, 0.05f, 0.05f, 0.3f);
 		Gizmos.DrawSphere(transform.position, consts._RockAttackDist);
 	}
 }

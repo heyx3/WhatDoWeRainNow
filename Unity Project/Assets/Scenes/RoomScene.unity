@@ -327,6 +327,9 @@ MonoBehaviour:
   _PaperAttackDamage: .275000006
   _PaperParticles: {fileID: 0}
   _ScissorsParticles: {fileID: 0}
+  _RockPrefab: {fileID: 130106, guid: 4bab3a464fe40a24b81dcfb8c8d18efe, type: 2}
+  _PaperPrefab: {fileID: 0}
+  _ScissorsPrefab: {fileID: 0}
   _RockAttackAudio: {fileID: 0}
   _PaperAttackAudio: {fileID: 0}
   _ScissorsAttackAudio: {fileID: 0}
