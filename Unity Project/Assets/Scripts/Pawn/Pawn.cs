@@ -116,6 +116,7 @@ public abstract class Pawn : MonoBehaviour
 				PaperAttack pAttack = ((GameObject)Instantiate(GameConstants.PaperPrefab)).GetComponent<PaperAttack>();
 				pAttack.transform.position = MyTransform.position;
 				pAttack.CameFromPlayer = (this == Player.Instance);
+				pAttack.transform.parent = MyTransform;
 				break;
 
 			case WeaponTypes.Scissors:

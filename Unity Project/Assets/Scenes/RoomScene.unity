@@ -533,11 +533,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObstaclePrefabs:
   - {fileID: 126670, guid: 4e62ab5578b024047bd0744898899609, type: 2}
+  - {fileID: 154310, guid: e9f96107d17bb9c48bb8894ac4f746c6, type: 2}
   EnemyPrefabs:
   - {fileID: 137664, guid: 72b7ce8533cc78048a65aa43395d27c1, type: 2}
   PlayerPrefab: {fileID: 132718, guid: e2c5caf8eff50814c8d4e2266443fd8a, type: 2}
   FloorPrefab: {fileID: 124110, guid: b9ecd60e96706b74ba86fdc8366aa8b5, type: 2}
-  PercentSpacesFilled: .150000006
+  PercentSpacesFilled: .0799999982
   MinRoomSize: 8
   MaxRoomSize: 16
   NEnemiesMin: 1

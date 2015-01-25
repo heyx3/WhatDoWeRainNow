@@ -395,9 +395,8 @@ MonoBehaviour:
   ScissorsRechargeTime: 2
   MoveSpeed: .00499999989
   PathAlongFloor: []
-  MinPathingUpdateTime: 3
+  MinPathingUpdateTime: 5
   MaxPathingUpdateTime: 6
-  MovementSpeed: .00499999989
 --- !u!114 &11437658
 MonoBehaviour:
   m_ObjectHideFlags: 1

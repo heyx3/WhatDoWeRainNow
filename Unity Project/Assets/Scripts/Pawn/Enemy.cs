@@ -14,7 +14,6 @@ public class Enemy : Pawn
 
 	public float MinPathingUpdateTime = 3.0f,
 				 MaxPathingUpdateTime = 6.0f;
-	public float MovementSpeed = 0.05f;
 
 
 	void Start()
@@ -30,8 +29,17 @@ public class Enemy : Pawn
 			!Controller.enabled)
 			return;
 
-		
+
 		Vector3 pos = MyTransform.position;
+
+
+		bool DEbug = (this == GameRegion.Instance.RoomObj.RoomPawns[0]);
+		Room rm = GameRegion.Instance.RoomObj;
+
+		//if (DEbug)
+		//	Debug.Log("This: " + pos + " " + rm.PosToRoomCoord(pos) +
+		//			  "; target: " + new Vector3(PathAlongFloor[0].x, 0.0f, PathAlongFloor[0].y) + " " + rm.PosToRoomCoord(new Vector3(PathAlongFloor[0].x, 0.0f, PathAlongFloor[0].y)));
+
 
 		//If the path is finished, calculate a new path.
 		if (PathAlongFloor.Count == 0)
@@ -45,9 +53,9 @@ public class Enemy : Pawn
 										   PathAlongFloor[0].y - pos.z);
 
 			//If this enemy is close enough to the target, just snap to it.
-			float distSqr = toTarget.sqrMagnitude;
-			float moveSpeed = MovementSpeed * Time.deltaTime;
-			if (distSqr < (moveSpeed * moveSpeed))
+			float dist = toTarget.magnitude;
+			float moveSpeed = MoveSpeed * Time.deltaTime;
+			if (dist < moveSpeed)
 			{
 				MyTransform.position = new Vector3(PathAlongFloor[0].x, pos.y, PathAlongFloor[0].y);
 				PathAlongFloor.RemoveAt(0);
@@ -63,8 +71,8 @@ public class Enemy : Pawn
 		//Constantly attack the enemy when possible.
 		Vector3 playerPos = Player.Instance.MyTransform.position;
 		Vector2 toPlayer = new Vector2(playerPos.x - pos.x, playerPos.z - pos.z);
-		float dist = toPlayer.magnitude;
-		if (dist < GameConstants.RockAttackDist)
+		float distToPlayer = toPlayer.magnitude;
+		if (distToPlayer < GameConstants.RockAttackDist)
 		{
 			Attack(WeaponTypes.Rock);
 		}

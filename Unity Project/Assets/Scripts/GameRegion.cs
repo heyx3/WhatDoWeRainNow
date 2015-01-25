@@ -83,8 +83,23 @@ public class GameRegion : MonoBehaviour
 		Instance = this;
 		tr = transform;
 		RoomObj = FindObjectOfType<Room>();
+		RoomsCleared = new bool[nRoomsWidth, nRoomsHeight];
+		for (int x = 0; x < nRoomsWidth; ++x)
+			for (int y = 0; y < nRoomsHeight; ++y)
+				RoomsCleared[x, y] = false;
 	}
-
+	void Update()
+	{
+		if (RoomObj.RoomPawns.Count == 0 && Player.Instance != null)
+		{
+			RoomsCleared[CurrentRoom.X, CurrentRoom.Y] = true;
+			mVector2i newRoom = CurrentRoom;
+			while (RoomsCleared[newRoom.X, newRoom.Y])
+				newRoom = new mVector2i(UnityEngine.Random.Range(0, RoomsCleared.GetLength(0)),
+										UnityEngine.Random.Range(0, RoomsCleared.GetLength(1)));
+			SwitchRooms(newRoom);
+		}
+	}
 	void OnDrawGizmos()
 	{
 		tr = transform;

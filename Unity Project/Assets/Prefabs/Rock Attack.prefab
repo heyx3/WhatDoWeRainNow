@@ -101,7 +101,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   KillAfterTime: 1.49899995
-  Damage: .400000006
+  Damage: .100000001
 --- !u!198 &19830106
 ParticleSystem:
   m_ObjectHideFlags: 1
