@@ -244,6 +244,9 @@ public class Room : MonoBehaviour
 		invisibleWalls[3].transform.position = thisPos + new Vector3(0.0f, 0.0f, halfRoomSize + (wallSize * 0.5f));
 		foreach (GameObject wall in invisibleWalls)
 			wall.AddComponent<BoxCollider>().size = new Vector3(wallSize, 1.0f, wallSize);
+
+
+		RoomNeedsCleaning = true;
 	}
 	private List<mVector2i> FillRoom(out int outRoomSize)
 	{
