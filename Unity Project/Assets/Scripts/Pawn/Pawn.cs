@@ -38,6 +38,11 @@ public abstract class Pawn : MonoBehaviour
 	/// </summary>
 	public float TimeLeftTillRecharged { get; set; }
 
+	/// <summary>
+	/// Starts at 1.0.
+	/// </summary>
+	public float Health { get; private set; }
+
 
 	public float RockRechargeTime = 0.5f,
 				 PaperRechargeTime = 1.0f,
@@ -46,6 +51,14 @@ public abstract class Pawn : MonoBehaviour
 
 
 	private float height = float.NaN;
+
+
+	public virtual void Damage(float amount)
+	{
+		Health -= amount;
+		if (Health <= 0.0f)
+			Destroy(gameObject);
+	}
 
 
 	protected virtual void Awake()
@@ -68,6 +81,14 @@ public abstract class Pawn : MonoBehaviour
 		{
 			Vector3 pos = MyTransform.position;
 			MyTransform.position = new Vector3(pos.x, height, pos.z);
+		}
+	}
+	protected virtual void OnDestroy()
+	{
+		int index = GameRegion.Instance.RoomObj.RoomPawns.IndexOf(this);
+		if (index >= 0)
+		{
+			GameRegion.Instance.RoomObj.RoomPawns.RemoveAt(index);
 		}
 	}
 

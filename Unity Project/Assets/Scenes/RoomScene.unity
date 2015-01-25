@@ -243,6 +243,7 @@ GameObject:
   - 114: {fileID: 528863141}
   - 114: {fileID: 528863143}
   - 114: {fileID: 528863144}
+  - 114: {fileID: 528863145}
   m_Layer: 0
   m_Name: Game Controller
   m_TagString: Untagged
@@ -292,7 +293,7 @@ MonoBehaviour:
   - {fileID: 126670, guid: 4e62ab5578b024047bd0744898899609, type: 2}
   PlayerPrefab: {fileID: 186658, guid: e2c5caf8eff50814c8d4e2266443fd8a, type: 2}
   FloorPrefab: {fileID: 124110, guid: b9ecd60e96706b74ba86fdc8366aa8b5, type: 2}
-  PercentSpacesFilled: .400000006
+  PercentSpacesFilled: .150000006
   MinRoomSize: 8
   MaxRoomSize: 16
 --- !u!114 &528863144
@@ -307,6 +308,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WaitTime: 5
+--- !u!114 &528863145
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 528863140}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8666dce930baf04e9b84ec7443005eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _RockAttackDist: .0500000007
+  _ScissorBulletSpeed: .0500000007
+  _PaperAttackDuration: .5
+  _RockAttackDamage: .400000006
+  _ScissorBulletDamage: .5
+  _PaperAttackDamage: .275000006
+  _PaperParticles: {fileID: 0}
+  _ScissorsParticles: {fileID: 0}
+  _RockAttackAudio: {fileID: 0}
+  _PaperAttackAudio: {fileID: 0}
+  _ScissorsAttackAudio: {fileID: 0}
 --- !u!1001 &625392908
 Prefab:
   m_ObjectHideFlags: 0

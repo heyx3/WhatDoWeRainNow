@@ -81,7 +81,9 @@
     <Compile Include="Assets\OVR\Scripts\Util\OVRScreenFade.cs" />
     <Compile Include="Assets\OVR\Scripts\Util\OVRUGUI.cs" />
     <Compile Include="Assets\OVR\Scripts\Util\OVRVisionGuide.cs" />
+    <Compile Include="Assets\Scripts\Attacks\RockAttack.cs" />
     <Compile Include="Assets\Scripts\DroppableObject.cs" />
+    <Compile Include="Assets\Scripts\GameConstants.cs" />
     <Compile Include="Assets\Scripts\GameInit.cs" />
     <Compile Include="Assets\Scripts\GameRegion.cs" />
     <Compile Include="Assets\Scripts\ObjectBounce.cs" />
