@@ -59,6 +59,7 @@ public class Player : Pawn
 		if (Health <= 0.0f)
 		{
 			GameObject go = new GameObject("Death Sound");
+			go.AddComponent<AudioSource>().PlayOneShot(GameConstants.LoseFight);
 			go.AddComponent<AudioSource>().PlayOneShot(DeathSound);
 
 			foreach (Pawn p in GameRegion.Instance.RoomObj.RoomPawns)

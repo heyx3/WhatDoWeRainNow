@@ -557,6 +557,7 @@ GameObject:
   - 114: {fileID: 528863143}
   - 114: {fileID: 528863144}
   - 114: {fileID: 528863145}
+  - 82: {fileID: 528863146}
   m_Layer: 0
   m_Name: Game Controller
   m_TagString: Untagged
@@ -646,6 +647,67 @@ MonoBehaviour:
   _PaperAttackAudio: {fileID: 8300000, guid: 8ce183c6b099966458190da38cfe4c3f, type: 3}
   _ScissorsAttackAudio: {fileID: 8300000, guid: 72ed9b653453b9e4cb9ee79a4a83ab73,
     type: 3}
+  _ScissorsBulletHit: {fileID: 8300000, guid: 1ac689d6ed9a27840bc7d521b56ca1b4, type: 3}
+  _LoseFight: {fileID: 8300000, guid: 54abae019e6cf224c9da2330b2679633, type: 3}
+  _WinFight: {fileID: 8300000, guid: 096d310e0c9cc1549ac91e4e67a1be5a, type: 3}
+--- !u!82 &528863146
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 528863140}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
 --- !u!1 &618660657
 GameObject:
   m_ObjectHideFlags: 0

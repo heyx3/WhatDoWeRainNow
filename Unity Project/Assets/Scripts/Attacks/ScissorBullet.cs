@@ -5,6 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(Collider))]
 [RequireComponent(typeof(Renderer))]
+[RequireComponent(typeof(AudioSource))]
 public class ScissorBullet : MonoBehaviour
 {
 	[NonSerialized]
@@ -67,6 +68,7 @@ public class ScissorBullet : MonoBehaviour
 		collider.enabled = false;
 		renderer.enabled = false;
 		enabled = false;
+		GetComponent<AudioSource>().PlayOneShot(GameConstants.ScissorsBulletHit);
 	}
 
 	void OnDrawGizmos()

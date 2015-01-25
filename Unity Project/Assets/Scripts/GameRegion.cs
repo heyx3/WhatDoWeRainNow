@@ -2,6 +2,7 @@
 using UnityEngine;
 
 
+[RequireComponent(typeof(AudioSource))]
 public class GameRegion : MonoBehaviour
 {
 	public static GameRegion Instance { get; private set; }
@@ -80,6 +81,8 @@ public class GameRegion : MonoBehaviour
 	{
 		if (RoomObj.RoomPawns.Count == 0 && Player.Instance != null)
 		{
+			GetComponent<AudioSource>().PlayOneShot(GameConstants.WinFight);
+
 			RoomsCleared[CurrentRoom.X, CurrentRoom.Y] = true;
 			mVector2i newRoom = CurrentRoom;
 			while (RoomsCleared[newRoom.X, newRoom.Y])
