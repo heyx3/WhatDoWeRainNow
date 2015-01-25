@@ -203,6 +203,8 @@ public class Room : MonoBehaviour
 												   Mathf.InverseLerp((float)minArea, (float)maxArea,
 													 				 (float)(roomSize * roomSize))));
 		nEnemies = Mathf.Min(nEnemies, freeSpaces.Count - 1);
+		if (oldRoom.X == -1 && oldRoom.Y == -1)
+			nEnemies = 1;
 		List<int> usedIndices = new List<int>() { index };
 		for (int i = 0; i < nEnemies; ++i)
 		{
@@ -276,7 +278,8 @@ public class Room : MonoBehaviour
 	}
 	private bool IsRoomOpen(int roomSize, List<mVector2i> freeSpaces)
 	{
-		if (freeSpaces.Count == 0) return false;
+		if (freeSpaces.Count < 2)
+			return false;
 
 		//Pick a random empty spot and flood-fill the area to see what's connected.
 		//If there are any spots that weren't touched by the flood-fill AND

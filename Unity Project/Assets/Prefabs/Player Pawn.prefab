@@ -426,7 +426,7 @@ MonoBehaviour:
   RockRechargeTime: .5
   PaperRechargeTime: 3
   ScissorsRechargeTime: 2
-  MoveSpeed: .00499999989
+  MoveSpeed: .00850000046
   DeathSound: {fileID: 8300000, guid: 170879a3804bff2468a6ed6e754c680a, type: 3}
 --- !u!114 &11432716
 MonoBehaviour:

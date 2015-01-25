@@ -76,6 +76,8 @@ public class GameRegion : MonoBehaviour
 		for (int x = 0; x < nRoomsWidth; ++x)
 			for (int y = 0; y < nRoomsHeight; ++y)
 				RoomsCleared[x, y] = false;
+
+		CurrentRoom = new mVector2i(-1, -1);
 	}
 	void Update()
 	{
