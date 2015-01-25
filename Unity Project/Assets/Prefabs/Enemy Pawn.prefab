@@ -334,7 +334,7 @@ MonoBehaviour:
   RockRechargeTime: .5
   PaperRechargeTime: 1
   ScissorsRechargeTime: 2
-  MoveSpeed: .5
+  MoveSpeed: .00499999989
   PathAlongFloor: []
   MinPathingUpdateTime: 3
   MaxPathingUpdateTime: 6

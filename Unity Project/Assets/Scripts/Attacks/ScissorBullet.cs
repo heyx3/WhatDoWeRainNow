@@ -61,9 +61,12 @@ public class ScissorBullet : MonoBehaviour
 
 
 		//Hide this entity and start the smoke effects.
-		renderer.enabled = false;
 		DestroyParticlesChild.SetActive(true);
 		StartCoroutine(KillAfterTime());
+		rgd.velocity = Vector3.zero;
+		collider.enabled = false;
+		renderer.enabled = false;
+		enabled = false;
 	}
 
 	void OnDrawGizmos()

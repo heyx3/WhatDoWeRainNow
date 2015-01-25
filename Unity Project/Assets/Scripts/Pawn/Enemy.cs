@@ -25,6 +25,11 @@ public class Enemy : Pawn
 	protected virtual void Update()
 	{
 		base.Update();
+
+		if (Player.Instance == null || !Player.Instance.Controller.enabled ||
+			!Controller.enabled)
+			return;
+
 		
 		Vector3 pos = MyTransform.position;
 
@@ -49,7 +54,7 @@ public class Enemy : Pawn
 			//Otherwise, keep moving like normal.
 			else
 			{
-				toTarget = toTarget.normalized * MovementSpeed * Time.deltaTime;;
+				toTarget = toTarget.normalized * MovementSpeed * Time.deltaTime;
 				Controller.Move(new Vector3(toTarget.x, 0.0f, toTarget.y));
 			}
 		}

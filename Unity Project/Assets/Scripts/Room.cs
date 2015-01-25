@@ -28,12 +28,16 @@ public class Room : MonoBehaviour
 	public List<mVector2i> FreeSpaces = new List<mVector2i>();
 
 
-	public List<GameObject> ObstaclePrefabs = new List<GameObject>();
+	public List<GameObject> ObstaclePrefabs = new List<GameObject>(),
+							EnemyPrefabs = new List<GameObject>();
 	public GameObject PlayerPrefab, FloorPrefab;
 
 	public float PercentSpacesFilled = 0.2f;
 	public int MinRoomSize = 5,
 			   MaxRoomSize = 8;
+
+	public int NEnemiesMin = 1,
+			   NEnemiesMax = 4;
 
 
 	private GameRegion Game { get { return GameRegion.Instance; } }
@@ -124,7 +128,7 @@ public class Room : MonoBehaviour
 		//Keep re-generating the room until a valid one is created.
 		//Count the number of times this loop happens to prevent infinite loops.
 		List<mVector2i> freeSpaces = null;
-		int i = 0;
+		int nIterations = 0;
 		const int nTries = 40;
 		int roomSize = -1;
 		while (true)
@@ -134,8 +138,8 @@ public class Room : MonoBehaviour
 			if (IsRoomOpen(roomSize, freeSpaces))
 				break;
 
-			i += 1;
-			if (i >= nTries)
+			nIterations += 1;
+			if (nIterations >= nTries)
 			{
 				Debug.LogError("Can't generate a valid room!");
 				Application.Quit();
@@ -177,8 +181,28 @@ public class Room : MonoBehaviour
 		playerTr.localScale *= objScale;
 
 
-		//Generate enemies.
+		//Generate enemies in other random free spaces.
 		RoomPawns = new List<Pawn>();
+		int minArea = MinRoomSize * MinRoomSize,
+			maxArea = MaxRoomSize * MaxRoomSize;
+		int nEnemies = Mathf.RoundToInt(Mathf.Lerp((float)NEnemiesMin, (float)NEnemiesMax,
+												   Mathf.InverseLerp((float)minArea, (float)maxArea,
+													 				 (float)(roomSize * roomSize))));
+		nEnemies = Mathf.Min(nEnemies, freeSpaces.Count - 1);
+		List<int> usedIndices = new List<int>() { index };
+		for (int i = 0; i < nEnemies; ++i)
+		{
+			index = usedIndices[0];
+			while (usedIndices.Contains(index))
+				index = UnityEngine.Random.Range(0, freeSpaces.Count);
+
+			usedIndices.Add(index);
+			GameObject prefab = EnemyPrefabs[UnityEngine.Random.Range(0, EnemyPrefabs.Count)];
+			Transform pawnTr = ((GameObject)Instantiate(prefab)).transform;
+			pawnTr.position = RoomCoordToPos(freeSpaces[index]);
+			pawnTr.localScale *= objScale;
+			RoomPawns.Add(pawnTr.GetComponent<Pawn>());
+		}
 		
 
 		//Place down the floor.
